@@ -1,36 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using CGOL.CORE;
+using System;
 
 namespace ConwaysGameOfLife
 {
     class Program
     {
-        static GOL g = new GOL(50, 25);
-
+        static DrawablePlayfield playfield = new CSGOLSFML(150, 150);
 
         static void NewPlayfield()
         {
-            g.SetPlayfield();
-            g.ClearPlayfield();
-            g.InitPlayfield();
+            playfield.g.SetPlayfield();
+            playfield.g.ClearPlayfield();
+            playfield.g.InitPlayfield();
         }
 
         static void Main(string[] args)
         {
             NewPlayfield();
             
-
-            while (true)
+            while (playfield.g.IsDone == false)
             {
-                g.DrawPlayfield();
-                g.ComputeNextGeneration();
-                Console.Title = "GENERATION: " + g.GENERATION;
-                //Thread.Sleep(200);
+                playfield.DrawPlayfield();
+                playfield.g.ComputeNextGeneration();
+                playfield.SetTitle();
             }
+            Console.WriteLine("\nDONE.");
 
             Console.ReadLine();
 
